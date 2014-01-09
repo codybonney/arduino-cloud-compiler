@@ -1,6 +1,7 @@
 var express = require('express'),
 	util = require('util'),
     exec = require('child_process').exec,
+	fs = require('fs'),
     child,
 	app = express();
 
@@ -20,8 +21,16 @@ app.post('/', function(req, res)
 {
 	var sketch = req.body;
 
+	fs.writeFile("./ino/src/sketch.ino", sketch, function(err) {
+	    if(err) {
+	        console.log(err);
+	    } else {
+	        console.log("Sketch was saved!");
+	    }
+	});
+
     // console.log(req.body);
-	child = exec('ls',
+	child = exec('cd ino',
 		function (error, stdout, stderr) {
 		console.log('stdout: ' + stdout);
 		console.log('stderr: ' + stderr);
