@@ -30,7 +30,7 @@ app.post('/', function(req, res)
 	});
 
     // console.log(req.body);
-	child = exec('cd ino',
+	child = exec('cd ino; ino build; cd ..;',
 		function (error, stdout, stderr) {
 		console.log('stdout: ' + stdout);
 		console.log('stderr: ' + stderr);
