@@ -21,15 +21,13 @@ app.post('/', function(req, res)
 {
 	var sketch = req.body;
 
-	// write to ino file
+	// write sketch data to sketch.ino
 	fs.writeFile("./ino/src/sketch.ino", sketch, function(err) {
 	    if(err) {
 	        console.log(err);
 		    res.send('error: ' + err);
-		    return false;
 	    } else {
-	        console.log("Sketch was saved!");
-
+		    // sketch was saved to sketch.ino
 		    // build firmware
 		    child = exec('cd ino; ino build; cd ..;', function (error, stdout, stderr) {
 		        console.log('stdout: ' + stdout);
