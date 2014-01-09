@@ -2,12 +2,11 @@ var express = require('express');
 var app = express();
 
 app.use (function(req, res, next) {
-    var data='';
+    var data = '';
     req.setEncoding('utf8');
     req.on('data', function(chunk) {
-       data += chunk;
+        data += chunk;
     });
-
     req.on('end', function() {
         req.body = data;
         next();
@@ -17,7 +16,7 @@ app.use (function(req, res, next) {
 app.post('/', function(req, res)
 {
     console.log(req.body);
-	res.send('recieved data');
+	res.send('received data');
 });
 
 app.listen(3000);
