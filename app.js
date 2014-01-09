@@ -1,5 +1,8 @@
-var express = require('express');
-var app = express();
+var express = require('express'),
+	util = require('util'),
+    exec = require('child_process').exec,
+    child,
+	app = express();
 
 app.use (function(req, res, next) {
     var data = '';
@@ -15,7 +18,17 @@ app.use (function(req, res, next) {
 
 app.post('/', function(req, res)
 {
-    console.log(req.body);
+	var sketch = req.body;
+
+    // console.log(req.body);
+	child = exec('ls',
+		function (error, stdout, stderr) {
+		console.log('stdout: ' + stdout);
+		console.log('stderr: ' + stderr);
+		if (error !== null) {
+			console.log('exec error: ' + error);
+		}
+	});
 	res.send('received data');
 });
 
