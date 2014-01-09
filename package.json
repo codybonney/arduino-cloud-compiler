@@ -2,7 +2,7 @@
 	"name": "arduino-cloud-compiler",
 	"preferGlobal": true,
 	"version": "0.0.1",
-	"author": "Cody Bonney <me@codybonney.com>",
+	"author": "Cody Bonney",
 	"description": "A web service for compiling arduino sketches",
 	"license": "MIT",
 	"engines": {
