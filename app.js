@@ -21,24 +21,28 @@ app.post('/', function(req, res)
 {
 	var sketch = req.body;
 
+	// write to ino file
 	fs.writeFile("./ino/src/sketch.ino", sketch, function(err) {
 	    if(err) {
 	        console.log(err);
+		    res.send('error: ' + err);
+		    return false;
 	    } else {
 	        console.log("Sketch was saved!");
+
+		    // build firmware
+		    child = exec('cd ino; ino build; cd ..;', function (error, stdout, stderr) {
+		        console.log('stdout: ' + stdout);
+
+			    if(stderr) {
+				    res.send('error: ' + stderr);
+			    } else {
+		            res.send('received data');
+		        }
+		   	});
+
 	    }
 	});
-
-    // console.log(req.body);
-	child = exec('cd ino; ino build; cd ..;',
-		function (error, stdout, stderr) {
-		console.log('stdout: ' + stdout);
-		console.log('stderr: ' + stderr);
-		if (error !== null) {
-			console.log('exec error: ' + error);
-		}
-	});
-	res.send('received data');
 });
 
 app.listen(3000);

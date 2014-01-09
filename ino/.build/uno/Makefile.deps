@@ -133,7 +133,7 @@
 
 
 .build/uno/arduino/dependencies.d : .build/uno/arduino/avr-libc/malloc.d .build/uno/arduino/avr-libc/realloc.d .build/uno/arduino/CDC.d .build/uno/arduino/HardwareSerial.d .build/uno/arduino/HID.d .build/uno/arduino/IPAddress.d .build/uno/arduino/main.d .build/uno/arduino/new.d .build/uno/arduino/Print.d .build/uno/arduino/Stream.d .build/uno/arduino/Tone.d .build/uno/arduino/USBCore.d .build/uno/arduino/WInterrupts.d .build/uno/arduino/wiring.d .build/uno/arduino/wiring_analog.d .build/uno/arduino/wiring_digital.d .build/uno/arduino/wiring_pulse.d .build/uno/arduino/wiring_shift.d .build/uno/arduino/WMath.d .build/uno/arduino/WString.d
-	@echo [96mScanning dependencies of arduino[0m
+	@echo Scanning dependencies of arduino
 	@mkdir -p .build/uno/arduino
 	@cat $^ > $@;
 

@@ -5,7 +5,7 @@
 
 .build/uno/src/sketch.cpp : src/sketch.ino
 	@mkdir -p .build/uno/src
-	@echo [93msrc/sketch.ino[0m
+	@echo src/sketch.ino
 	@/usr/local/bin/ino preproc  -o $@ $^
 
 
