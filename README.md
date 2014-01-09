@@ -20,4 +20,4 @@ Usage
 $ npm start
 ```
 
-Open your browser and visit http://localhost:3000/
+Open your browser and visit [http://localhost:3000/](http://localhost:3000/)
