@@ -35,7 +35,16 @@ app.post('/', function(req, res)
 			    if(stderr) {
 				    res.send('error: ' + stderr);
 			    } else {
-		            res.send('received data');
+
+				    // read compiled file
+				    fs.readFile('./ino/.build/uno/firmware.hex', 'utf8', function (err, data) {
+				      if (err) {
+						console.log(err);
+						res.send('error: ' + err);
+				      }
+					    res.send(data);
+				    })
+
 		        }
 		   	});
 
