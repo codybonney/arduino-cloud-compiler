@@ -1,4 +1,4 @@
-.build/uno/src/sketch.d .build/uno/src/sketch.o: .build/uno/src/sketch.cpp \
+sketch.o: .build/uno/src/sketch.cpp \
   /Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino/Arduino.h \
   /Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino/binary.h \
   /Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino/WCharacter.h \
