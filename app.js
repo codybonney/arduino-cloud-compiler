@@ -2,6 +2,7 @@ var express = require('express'),
 	util = require('util'),
     exec = require('child_process').exec,
 	fs = require('fs'),
+	path = require('path'),
     child,
 	app = express();
 
@@ -22,7 +23,7 @@ function randomString(length) {
  */
 function initInoProject(directory, res, callback) {
 	child = exec('./inoInit.sh ' + directory, function (error, stdout, stderr) {
-        console.log(stdout);
+        // console.log(stdout);
 	    if(stderr) {
 		    res.send('error: ' + stderr);
 	    } else {
@@ -50,7 +51,7 @@ function writeSketchData(directory, sketch, res, callback) {
  */
 function buildInoProject(directory, res, callback) {
 	child = exec('./inoBuild.sh ' + directory, function (error, stdout, stderr) {
-        console.log(stdout);
+        // console.log(stdout);
 	    if(stderr) {
 		    res.send('error: ' + stderr);
 	    } else {
@@ -73,6 +74,17 @@ function readHexFile(directory, res, callback) {
 }
 
 /*
+ * Send a hex file generated from a built ino project
+ */
+function sendHexFile(directory, res) {
+	var file = path.join(__dirname, directory + '/.build/uno/firmware.hex');
+	var filename = path.basename(file);
+	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+	var filestream = fs.createReadStream(file);
+    filestream.pipe(res);
+}
+
+/*
  * Middleware for reading data from the request body
  */
 app.use (function(req, res, next) {
@@ -87,16 +99,22 @@ app.use (function(req, res, next) {
     });
 });
 
+app.get("/compiled/*",function(req, res){
+	var file = path.join(__dirname, req.path + '/.build/uno/firmware.hex');
+	var filename = path.basename(file);
+	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+	var filestream = fs.createReadStream(file);
+    filestream.pipe(res);
+});
+
 app.post('/', function(req, res) {
 	var sketch = req.body;
-	var directory = './compiled/' + randomString(25);
+	var directory = './compiled/' + randomString(30);
 
 	initInoProject(directory, res, function() {
 		writeSketchData(directory, sketch, res, function() {
 			buildInoProject(directory, res, function() {
-				readHexFile(directory, res, function(data) {
-					res.send(data);
-				})
+				sendHexFile(directory, res);
 			});
 		});
 	});
