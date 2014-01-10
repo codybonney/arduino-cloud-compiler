@@ -37,7 +37,12 @@
 cat .build/uno/src/sketch.d > .build/uno/src/dependencies.d;
 
 # src/sketch.cpp
-/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/bin/avr-g++ -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/standard -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino/avr-libc -fno-exceptions -iquote src  -o .build/uno/src/sketch.o -c .build/uno/src/sketch.cpp
+/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/bin/avr-g++ \
+    -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105 \
+    -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino -ffunction-sections -fdata-sections -g -Os -w \
+    -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/standard \
+    -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino \
+    -I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino/avr-libc -fno-exceptions -iquote src  -o .build/uno/src/sketch.o -c .build/uno/src/sketch.cpp
 
 # Linking firmware.elf
 /Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -Wl,-Os -Wl,--gc-sections -o .build/uno/firmware.elf .build/uno/src/sketch.o .build/uno/arduino/libarduino.a -lm
