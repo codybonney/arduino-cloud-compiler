@@ -8,8 +8,16 @@ NOTE: This is a work in progress. It should not be used in production!
 Installation
 ======================
 
+Install the Node.js dependencies.
+
 ```
 $ npm install
+```
+
+Set the permissions of the shell files.
+
+```
+$ chmod 775 ino*.sh
 ```
 
 Usage
