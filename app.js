@@ -5,7 +5,9 @@ var express = require('express'),
     child,
 	app = express();
 
-
+/*
+ * Generate a random alphanumeric string
+ */
 function randomString(length) {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -15,20 +17,9 @@ function randomString(length) {
     return text;
 }
 
-
-// write sketch data to sketch.ino
-function writeSketchData(directory, sketch, res, callback) {
-	fs.writeFile(directory + "/src/sketch.ino", sketch, function(err) {
-	    if(err) {
-	        console.log(err);
-		    res.send('error: ' + err);
-	    } else {
-		    callback();
-        }
-	});
-}
-
-
+/*
+ * Initialize a new ino project
+ */
 function initInoProject(directory, res, callback) {
 	child = exec('./inoInit.sh ' + directory, function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -40,6 +31,23 @@ function initInoProject(directory, res, callback) {
 	});
 }
 
+/*
+ * Write the submitted sketch data to an .ino file
+ */
+function writeSketchData(directory, sketch, res, callback) {
+	fs.writeFile(directory + "/src/sketch.ino", sketch, function(err) {
+	    if(err) {
+	        console.log(err);
+		    res.send('error: ' + err);
+	    } else {
+		    callback();
+        }
+	});
+}
+
+/*
+ * Build an ino project
+ */
 function buildInoProject(directory, res, callback) {
 	child = exec('./inoBuild.sh ' + directory, function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -51,6 +59,9 @@ function buildInoProject(directory, res, callback) {
 	});
 }
 
+/*
+ * Read the hex data generated from a built ino project
+ */
 function readHexFile(directory, res, callback) {
 	fs.readFile(directory + '/.build/uno/firmware.hex', 'utf8', function (err, data) {
 		if (err) {
@@ -61,6 +72,9 @@ function readHexFile(directory, res, callback) {
     })
 }
 
+/*
+ * Middleware for reading data from the request body
+ */
 app.use (function(req, res, next) {
     var data = '';
     req.setEncoding('utf8');
