@@ -29,7 +29,7 @@ app.post('/', function(req, res)
 	    } else {
 		    // sketch was saved to sketch.ino
 		    // build firmware
-		    child = exec('cd ino; ino build; cd ..;', function (error, stdout, stderr) {
+		    child = exec('./ino/build.sh', function (error, stdout, stderr) {
 		        console.log('stdout: ' + stdout);
 
 			    if(stderr) {
