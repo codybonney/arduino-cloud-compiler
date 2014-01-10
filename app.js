@@ -69,7 +69,7 @@ function readHexFile(directory, res, callback) {
 			res.send('error: ' + err);
 		}
 		callback(data);
-    })
+    });
 }
 
 /*
@@ -87,8 +87,7 @@ app.use (function(req, res, next) {
     });
 });
 
-app.post('/', function(req, res)
-{
+app.post('/', function(req, res) {
 	var sketch = req.body;
 	var directory = './compiled/' + randomString(25);
 
@@ -101,7 +100,6 @@ app.post('/', function(req, res)
 			});
 		});
 	});
-
 });
 
 app.listen(3000);
