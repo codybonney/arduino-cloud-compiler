@@ -23,7 +23,7 @@ function randomString(length) {
  */
 function initInoProject(directory, res, callback) {
 	child = exec('./inoInit.sh ' + directory, function (error, stdout, stderr) {
-        // console.log(stdout);
+        console.log(stdout);
 	    if(stderr) {
 		    res.send('error: ' + stderr);
 	    } else {
@@ -51,7 +51,7 @@ function writeSketchData(directory, sketch, res, callback) {
  */
 function buildInoProject(directory, res, callback) {
 	child = exec('./inoBuild.sh ' + directory, function (error, stdout, stderr) {
-        // console.log(stdout);
+        console.log(stdout);
 	    if(stderr) {
 		    res.send('error: ' + stderr);
 	    } else {
