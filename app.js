@@ -105,7 +105,7 @@ app.get("/compiled/*",function(req, res){
 
 app.post('/', function(req, res) {
 	var sketch = req.body;
-	var directory = './compiled/' + randomString(20);
+	var directory = './compiled/' + randomString(12);
 
 	initInoProject(directory, res, function() {
 		writeSketchData(directory, sketch, res, function() {
