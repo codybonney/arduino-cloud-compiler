@@ -100,16 +100,12 @@ app.use (function(req, res, next) {
 });
 
 app.get("/compiled/*",function(req, res){
-	var file = path.join(__dirname, req.path + '/.build/uno/firmware.hex');
-	var filename = path.basename(file);
-	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-	var filestream = fs.createReadStream(file);
-    filestream.pipe(res);
+	sendHexFile(req.path, res);
 });
 
 app.post('/', function(req, res) {
 	var sketch = req.body;
-	var directory = './compiled/' + randomString(30);
+	var directory = './compiled/' + randomString(20);
 
 	initInoProject(directory, res, function() {
 		writeSketchData(directory, sketch, res, function() {
