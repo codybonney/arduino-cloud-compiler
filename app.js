@@ -27,22 +27,22 @@ app.post('/', function(req, res)
 	        console.log(err);
 		    res.send('error: ' + err);
 	    } else {
+
 		    // sketch was saved to sketch.ino
 		    // build firmware
 		    child = exec('./build.sh', function (error, stdout, stderr) {
 		        console.log('stdout: ' + stdout);
-
 			    if(stderr) {
 				    res.send('error: ' + stderr);
 			    } else {
 
 				    // read compiled file
 				    fs.readFile('./.build/uno/firmware.hex', 'utf8', function (err, data) {
-				      if (err) {
+					if (err) {
 						console.log(err);
 						res.send('error: ' + err);
-				      }
-					    res.send(data);
+					}
+						res.send(data);
 				    })
 
 		        }
