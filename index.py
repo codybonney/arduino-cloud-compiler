@@ -1,8 +1,6 @@
 from flask import Flask, request, render_template
 import string
 import random
-
-import sys
 import os.path
 import ino.runner
 
@@ -14,10 +12,11 @@ app = Flask(__name__)
 
 @app.route('/compile', methods=['POST'])
 def compile_sketch():
-    compiled = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/" + random_string()
+    sketch_id = random_string()
+    compiled_dir = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/" + sketch_id
 
-    os.mkdir(compiled)
-    os.chdir(compiled)
+    os.mkdir(compiled_dir)
+    os.chdir(compiled_dir)
 
     ino.runner.main(['ino', 'init'])
 
