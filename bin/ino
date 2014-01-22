@@ -1,0 +1,6 @@
+#!/Users/cody/Projects/github/arduino-cloud-compiler/bin/python
+
+from ino.runner import main
+
+if __name__ == '__main__':
+    main()
