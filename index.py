@@ -5,7 +5,7 @@ import os.path
 import ino.runner
 
 host = '192.168.1.33'
-compiled_path = "~/Projects/github/arduino-cloud-compiler/compiled/"
+compiled_path = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/"
 app = Flask(__name__)
 
 
