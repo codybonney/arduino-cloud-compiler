@@ -19,18 +19,21 @@ input {
 }
 
 textarea {
-	width: 500px;
-	height: 500px;
+	width: 100%;
+	height: 600px;
 	font-family: Monaco, monospace;
 }
 
 .container {
+	min-width: 400px;
+	width: 45%;
 	font-family: Helvetica;
 	margin-top: 2em;
 	float: left;
 	padding: 0 1em;
 	display: inline-block;
 }
+
 
 .debug {
 	position: fixed;
