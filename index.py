@@ -4,11 +4,14 @@ import random
 import os.path
 import ino.runner
 
+host = '192.168.1.33'
+compiled_path = "~/Projects/github/arduino-cloud-compiler/compiled/"
+app = Flask(__name__)
+
 
 def random_string(size=8, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
 
-app = Flask(__name__)
 
 @app.route('/')
 def submission():
@@ -18,7 +21,7 @@ def submission():
 @app.route('/compile', methods=['POST'])
 def compile_sketch():
     sketch_id = random_string()
-    compiled_dir = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/" + sketch_id + "/"
+    compiled_dir = compiled_path + sketch_id + "/"
 
     # create a directory for the compiled sketch
     os.mkdir(compiled_dir)
@@ -43,4 +46,4 @@ def compile_sketch():
     return hex_data
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=host)
