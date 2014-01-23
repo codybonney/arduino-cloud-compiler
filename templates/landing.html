@@ -20,7 +20,7 @@
             <form id="sketch_submission">
                 <label for="sketch">Sketch</label>
                 <textarea id="sketch" name="sketch" ng-model="sketch"></textarea>
-                <input type="submit" name="submit" id="submit" class="button" value="Compile Sketch" />
+                <input type="submit" name="submit" id="submit" class="button" ng-model="submit" value="Compile Sketch" ng-click="compile()" />
             </form>
         </div>
 
@@ -30,36 +30,5 @@
         </div>
     </div>
 
-
-
-    <script>
-        var $submitButton = $("#submit");
-        var $compileTime = $("#compileTime");
-        var $sketch = $("#sketch");
-        var $compiled = $("#compiled");
-
-        $('#sketch_submission').submit(function(e){
-            e.preventDefault();
-            $compileTime.html('Compiling...');
-            $compiled.val("");
-            $submitButton.val("Compiling Sketch...").addClass('compiling');
-
-            var compileTimeStart = new Date().getTime();
-
-            $.ajax({
-              type: "POST",
-              url: "./compile",
-              data: {
-                  sketch: $sketch.val()
-              }
-            })
-            .done(function(hex) {
-                var compileTimeEnd = new Date().getTime();
-                $compiled.val(hex);
-                $compileTime.html('Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms');
-                $submitButton.val("Compile Sketch").removeClass('compiling');
-            });
-        })
-    </script>
 </body>
 </html>
