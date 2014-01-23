@@ -43,6 +43,7 @@ void loop()
 
 
     <script>
+        var $submitButton = $("#submit");
         var $compileTime = $("#compileTime");
         var $sketch = $("#sketch");
         var $compiled = $("#compiled");
@@ -51,6 +52,7 @@ void loop()
             e.preventDefault();
             $compileTime.html('Compiling...');
             $compiled.val("");
+            $submitButton.val("Compiling Firmware...").addClass('compiling');
 
             var compileTimeStart = new Date().getTime();
 
@@ -65,6 +67,7 @@ void loop()
                 var compileTimeEnd = new Date().getTime();
                 $compiled.val(hex);
                 $compileTime.html('Compiled firmware in ' + (compileTimeEnd - compileTimeStart) + 'ms');
+                $submitButton.val("Upload Sketch").removeClass('compiling');
             });
         })
     </script>

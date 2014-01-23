@@ -4,6 +4,10 @@ body {
 	padding: 0;
 }
 
+body {
+	padding: 1em 0;
+}
+
 label {
 	padding: .5em 0;
 	color: #AEAEAE;
@@ -24,7 +28,7 @@ textarea {
 	font-family: Helvetica;
 	margin-top: 2em;
 	float: left;
-	padding: 20px;
+	padding: 0 1em;
 	display: inline-block;
 }
 
@@ -52,6 +56,16 @@ textarea {
 	border: none;
 }
 
+.button:focus {
+	outline: none;
+}
+
 .button:hover {
+	cursor: pointer;
 	background: #6FB97E;
+}
+
+.button.compiling {
+	pointer-events: none;
+	opacity: 0.5;
 }

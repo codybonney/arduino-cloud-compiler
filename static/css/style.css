@@ -3,6 +3,9 @@ body {
   margin: 0;
   padding: 0; }
 
+body {
+  padding: 1em 0; }
+
 label {
   padding: .5em 0;
   color: #AEAEAE; }
@@ -20,7 +23,7 @@ textarea {
   font-family: Helvetica;
   margin-top: 2em;
   float: left;
-  padding: 20px;
+  padding: 0 1em;
   display: inline-block; }
 
 .debug {
@@ -45,5 +48,13 @@ textarea {
   margin: 1em 0;
   border: none; }
 
+.button:focus {
+  outline: none; }
+
 .button:hover {
+  cursor: pointer;
   background: #6FB97E; }
+
+.button.compiling {
+  pointer-events: none;
+  opacity: 0.5; }
