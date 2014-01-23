@@ -15,3 +15,13 @@ textarea {
   float: left;
   padding: 20px;
   display: inline-block; }
+
+.debug {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-family: monospace;
+  color: #FFF;
+  background: #000;
+  padding: 1em;
+  right: 0; }

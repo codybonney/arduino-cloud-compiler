@@ -29,27 +29,43 @@ void loop()
             <input type="submit" name="submit" id="submit" value="Upload Sketch" />
         </form>
     </div>
+
     <div class="container">
         <label for="compiled">Compiled</label>
         <textarea id="compiled" name="compiled"></textarea>
     </div>
+
+    <div class="debug">
+        <div id="compileTime">
+            &nbsp;
+        </div>
+    </div>
+
+
     <script>
+        var $compileTime = $("#compileTime");
+        var $sketch = $("#sketch");
+        var $compiled = $("#compiled");
+
         $('#sketch_submission').submit(function(e){
             e.preventDefault();
+            $compileTime.html('Compiling...');
+            $compiled.val("");
+
+            var compileTimeStart = new Date().getTime();
 
             $.ajax({
               type: "POST",
               url: "./compile",
               data: {
-                  sketch: $("#sketch").val()
+                  sketch: $sketch.val()
               }
             })
             .done(function(hex) {
-                console.log(hex);
-                $("#compiled").val(hex);
+                var compileTimeEnd = new Date().getTime();
+                $compiled.val(hex);
+                $compileTime.html('Compiled in ' + (compileTimeEnd - compileTimeStart) + ' ms');
             });
-
-
         })
     </script>
 </body>
