@@ -64,7 +64,7 @@ void loop()
             .done(function(hex) {
                 var compileTimeEnd = new Date().getTime();
                 $compiled.val(hex);
-                $compileTime.html('Compiled in ' + (compileTimeEnd - compileTimeStart) + ' ms');
+                $compileTime.html('Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms');
             });
         })
     </script>
