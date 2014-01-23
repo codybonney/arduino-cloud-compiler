@@ -1,81 +1,35 @@
 <!doctype html>
-<html>
+<html ng-app>
 <head>
     <title>Arduino Cloud Compiler</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/controller.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>
 </head>
 <body>
 
-    <div class="debug">
-        <div id="compileTime">
-            &nbsp;
+    <div class="app" ng-controller="Controller">
+        <div class="debug">
+            <div id="compileTime">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="container sketch">
+            <form id="sketch_submission">
+                <label for="sketch">Sketch</label>
+                <textarea id="sketch" name="sketch" ng-model="sketch"></textarea>
+                <input type="submit" name="submit" id="submit" class="button" value="Compile Sketch" />
+            </form>
+        </div>
+
+        <div class="container firmware">
+            <label for="compiled">Firmware</label>
+            <textarea id="compiled" name="compiled" readonly></textarea>
         </div>
     </div>
 
-    <div class="container sketch">
-        <form id="sketch_submission">
-            <label for="sketch">Sketch</label>
-            <textarea id="sketch" name="sketch">
-#include <LiquidCrystal.h>
-
-int resetPin = 6;
-LiquidCrystal lcd(12, 13, 11, 10, 9, 8);
-
-void setup() {
-    Serial.begin(115200);
-    pinMode(resetPin, OUTPUT);
-    digitalWrite(resetPin, LOW);
-
-    // setup the number of columns and rows on the LCD
-    lcd.begin(16, 2);
-    lcd.clear();
-}
-
-void loop() {
-    // Check if avrdude 5.11 is attempting to push new firmware to the device
-    Serial.peek() == '0' ? downloadFirmware() : mainProgram();
-    delay(100);
-}
-
-void mainProgram() {
-    display("Listening for", "serial input :)");
-}
-
-void downloadFirmware() {
-    for(int i=0; i<100; i++) {
-        // wait up to 5 seconds for synchronization request from avrdude 5.11
-        if(Serial.read() == '0' && Serial.read()==' ') {
-            display("Updating", "firmware...");
-            // send response to avrdude 5.11 to begin synchronization
-            Serial.write(0x14);
-            Serial.write(0x10);
-            resetArduino();
-        }
-        delay(50);
-    }
-}
-
-void display(char *line1, char *line2) {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(line1);
-    lcd.setCursor(0, 1);
-    lcd.print(line2);
-}
-
-void resetArduino() {
-    digitalWrite(resetPin, HIGH);
-}
-</textarea>
-            <input type="submit" name="submit" id="submit" class="button" value="Compile Sketch" />
-        </form>
-    </div>
-
-    <div class="container firmware">
-        <label for="compiled">Firmware</label>
-        <textarea id="compiled" name="compiled" readonly></textarea>
-    </div>
 
 
     <script>
