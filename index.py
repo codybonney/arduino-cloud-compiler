@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
 import string
 import random
 import os.path
@@ -15,7 +15,7 @@ def random_string(size=8, chars=string.ascii_uppercase + string.digits):
 
 @app.route('/')
 def submission():
-    return render_template('landing.html')
+    return app.send_static_file('landing.html')
 
 
 @app.route('/compile', methods=['POST'])

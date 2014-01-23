@@ -6,12 +6,12 @@ function Controller($scope) {
 
 	$scope.master = {};
 	$scope.sketch = "#define LED_PIN 13\n\nvoid setup()\n{\n    pinMode(LED_PIN, OUTPUT);\n}\n\nvoid loop()\n{\n    digitalWrite(LED_PIN, HIGH);\n    delay(100);\n    digitalWrite(LED_PIN, HIGH);\n    delay(900);\n}";
-	$scope.submit_sketch = "TEST";
+	$scope.submit = "TEST";
 
 	$scope.compile = function() {
 		$compileTime.html('Compiling...');
 		$compiled.val("");
-		$submitButton.val("Compiling Sketch...").addClass('compiling');
+		//$submitButton.val("Compiling Sketch...").addClass('compiling');
 
 		var compileTimeStart = new Date().getTime();
 
