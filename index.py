@@ -35,7 +35,11 @@ def compile_sketch():
     # build the project
     ino.runner.main(['ino', 'build'], compiled_dir)
 
-    return 'compiling'
+    compiled_hex_file = open(".build/uno/firmware.hex", "r")
+    hex_data = compiled_hex_file.read()
+    compiled_hex_file.close()
+
+    return hex_data
 
 if __name__ == '__main__':
     app.run(debug=True)
