@@ -1,17 +1,19 @@
 function Controller($scope) {
-	var $submitButton = $("#submit");
+	var submitButtonDefault = "Compile Sketch";
+	var defaultSketch = "#define LED_PIN 13\n\nvoid setup()\n{\n    pinMode(LED_PIN, OUTPUT);\n}\n\nvoid loop()\n{\n    digitalWrite(LED_PIN, HIGH);\n    delay(100);\n    digitalWrite(LED_PIN, HIGH);\n    delay(900);\n}";
+
 	var $compileTime = $("#compileTime");
 	var $sketch = $("#sketch");
 	var $compiled = $("#compiled");
 
-	$scope.master = {};
-	$scope.sketch = "#define LED_PIN 13\n\nvoid setup()\n{\n    pinMode(LED_PIN, OUTPUT);\n}\n\nvoid loop()\n{\n    digitalWrite(LED_PIN, HIGH);\n    delay(100);\n    digitalWrite(LED_PIN, HIGH);\n    delay(900);\n}";
-	$scope.submit = "TEST";
+	$scope.status = "waiting";
+	$scope.sketch = defaultSketch;
+	$scope.submitButton = submitButtonDefault;
 
 	$scope.compile = function() {
-		$compileTime.html('Compiling...');
+		$scope.status = "compiling";
+		$scope.submitButton = "Compiling...";
 		$compiled.val("");
-		//$submitButton.val("Compiling Sketch...").addClass('compiling');
 
 		var compileTimeStart = new Date().getTime();
 
@@ -19,14 +21,17 @@ function Controller($scope) {
 			type: "POST",
 			url: "./compile",
 			data: {
-			sketch: $sketch.val()
+				sketch: $sketch.val()
 			}
-			})
-			.done(function(hex) {
+		})
+		.success(function(hex) {
 			var compileTimeEnd = new Date().getTime();
 			$compiled.val(hex);
 			$compileTime.html('Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms');
-			$submitButton.val("Compile Sketch").removeClass('compiling');
+
+			$scope.status = "waiting";
+			$scope.submitButton = submitButtonDefault;
+			$scope.$apply();
 		});
 	};
 

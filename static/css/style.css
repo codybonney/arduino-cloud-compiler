@@ -46,15 +46,12 @@ textarea {
   color: #FFF;
   font-size: .85em;
   text-decoration: none;
-  display: block;
+  display: inline-block;
   padding: 0 1.8em;
   border-radius: 4px;
   background: #57AD68;
   margin: 1em 0;
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none; }
+  border: none; }
 
 .button:focus {
   outline: none; }
