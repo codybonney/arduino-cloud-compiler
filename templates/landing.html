@@ -17,28 +17,64 @@
         <form id="sketch_submission">
             <label for="sketch">Sketch</label>
             <textarea id="sketch" name="sketch">
-#define LED_PIN 13
+#include <LiquidCrystal.h>
 
-void setup()
-{
-    pinMode(LED_PIN, OUTPUT);
+int resetPin = 6;
+LiquidCrystal lcd(12, 13, 11, 10, 9, 8);
+
+void setup() {
+    Serial.begin(115200);
+    pinMode(resetPin, OUTPUT);
+    digitalWrite(resetPin, LOW);
+
+    // setup the number of columns and rows on the LCD
+    lcd.begin(16, 2);
+    lcd.clear();
 }
 
-void loop()
-{
-    digitalWrite(LED_PIN, HIGH);
+void loop() {
+    // Check if avrdude 5.11 is attempting to push new firmware to the device
+    Serial.peek() == '0' ? downloadFirmware() : mainProgram();
     delay(100);
-    digitalWrite(LED_PIN, LOW);
-    delay(900);
+}
+
+void mainProgram() {
+    display("Listening for", "serial input :)");
+}
+
+void downloadFirmware() {
+    for(int i=0; i<100; i++) {
+        // wait up to 5 seconds for synchronization request from avrdude 5.11
+        if(Serial.read() == '0' && Serial.read()==' ') {
+            display("Updating", "firmware...");
+            // send response to avrdude 5.11 to begin synchronization
+            Serial.write(0x14);
+            Serial.write(0x10);
+            resetArduino();
+        }
+        delay(50);
+    }
+}
+
+void display(char *line1, char *line2) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(line1);
+    lcd.setCursor(0, 1);
+    lcd.print(line2);
+}
+
+void resetArduino() {
+    digitalWrite(resetPin, HIGH);
 }
 </textarea>
-            <input type="submit" name="submit" id="submit" class="button" value="Upload Sketch" />
+            <input type="submit" name="submit" id="submit" class="button" value="Compile Sketch" />
         </form>
     </div>
 
     <div class="container firmware">
-        <label for="compiled">Compiled Firmware</label>
-        <textarea id="compiled" name="compiled"></textarea>
+        <label for="compiled">Firmware</label>
+        <textarea id="compiled" name="compiled" readonly></textarea>
     </div>
 
 
@@ -52,7 +88,7 @@ void loop()
             e.preventDefault();
             $compileTime.html('Compiling...');
             $compiled.val("");
-            $submitButton.val("Compiling Firmware...").addClass('compiling');
+            $submitButton.val("Compiling Sketch...").addClass('compiling');
 
             var compileTimeStart = new Date().getTime();
 
@@ -66,8 +102,8 @@ void loop()
             .done(function(hex) {
                 var compileTimeEnd = new Date().getTime();
                 $compiled.val(hex);
-                $compileTime.html('Compiled firmware in ' + (compileTimeEnd - compileTimeStart) + 'ms');
-                $submitButton.val("Upload Sketch").removeClass('compiling');
+                $compileTime.html('Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms');
+                $submitButton.val("Compile Sketch").removeClass('compiling');
             });
         })
     </script>

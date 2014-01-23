@@ -25,13 +25,18 @@ textarea {
 }
 
 .container {
-	min-width: 400px;
-	width: 45%;
+	min-width: 550px;
+	width: 58%;
 	font-family: Helvetica;
 	margin-top: 2em;
 	float: left;
 	padding: 0 1em;
 	display: inline-block;
+
+	&.firmware {
+		min-width: 320px;
+		width: 35%;
+	}
 }
 
 .debug {
