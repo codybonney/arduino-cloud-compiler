@@ -7,12 +7,32 @@
 </head>
 <body>
 
-    <form id="sketch_submission">
-        <label for="sketch">Sketch</label>
-        <textarea id="sketch" name="sketch"></textarea>
-        <input type="submit" name="submit" id="submit" value="Upload Sketch" />
-    </form>
+    <div class="container">
+        <form id="sketch_submission">
+            <label for="sketch">Sketch</label>
+            <textarea id="sketch" name="sketch">
+#define LED_PIN 13
 
+void setup()
+{
+    pinMode(LED_PIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(LED_PIN, HIGH);
+    delay(100);
+    digitalWrite(LED_PIN, LOW);
+    delay(900);
+}
+</textarea>
+            <input type="submit" name="submit" id="submit" value="Upload Sketch" />
+        </form>
+    </div>
+    <div class="container">
+        <label for="compiled">Compiled</label>
+        <textarea id="compiled" name="compiled"></textarea>
+    </div>
     <script>
         $('#sketch_submission').submit(function(e){
             e.preventDefault();
@@ -24,8 +44,9 @@
                   sketch: $("#sketch").val()
               }
             })
-            .done(function(msg) {
-                console.log(msg);
+            .done(function(hex) {
+                console.log(hex);
+                $("#compiled").val(hex);
             });
 
 
