@@ -7,6 +7,12 @@
 </head>
 <body>
 
+    <div class="debug">
+        <div id="compileTime">
+            &nbsp;
+        </div>
+    </div>
+
     <div class="container">
         <form id="sketch_submission">
             <label for="sketch">Sketch</label>
@@ -26,20 +32,15 @@ void loop()
     delay(900);
 }
 </textarea>
-            <input type="submit" name="submit" id="submit" value="Upload Sketch" />
+            <input type="submit" name="submit" id="submit" class="button" value="Upload Sketch" />
         </form>
     </div>
 
     <div class="container">
-        <label for="compiled">Compiled</label>
+        <label for="compiled">Compiled Firmware</label>
         <textarea id="compiled" name="compiled"></textarea>
     </div>
 
-    <div class="debug">
-        <div id="compileTime">
-            &nbsp;
-        </div>
-    </div>
 
     <script>
         var $compileTime = $("#compileTime");
@@ -63,7 +64,7 @@ void loop()
             .done(function(hex) {
                 var compileTimeEnd = new Date().getTime();
                 $compiled.val(hex);
-                $compileTime.html('Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms');
+                $compileTime.html('Compiled firmware in ' + (compileTimeEnd - compileTimeStart) + 'ms');
             });
         })
     </script>
