@@ -18,22 +18,25 @@ def submission():
 @app.route('/compile', methods=['POST'])
 def compile_sketch():
     sketch_id = random_string()
-    compiled_dir = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/" + sketch_id
+    #compiled_dir = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/" + sketch_id + "/"
+    compiled_dir = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/0D1XN4IH/"
 
     # create a directory for the compiled sketch
-    os.mkdir(compiled_dir)
+    #os.mkdir(compiled_dir)
     os.chdir(compiled_dir)
 
     # initialize
-    ino.runner.main(['ino', 'init'])
+    #ino.runner.main(['ino', 'init'], compiled_dir)
 
     # write the sketch.ino file
-    sketch_file = open("src/sketch.ino", "w+")
-    sketch_file.write(request.form["sketch"])
-    sketch_file.close()
+    #sketch_file = open("src/sketch.ino", "w+")
+    #sketch_file.write(request.form["sketch"])
+    #sketch_file.close()
+
+    #ino.runner.main(['ino', 'clean'], compiled_dir)
 
     # build the project
-    ino.runner.main(['ino', 'build'])
+    ino.runner.main(['ino', 'build', '-v'], compiled_dir)
 
     return 'compiling'
 

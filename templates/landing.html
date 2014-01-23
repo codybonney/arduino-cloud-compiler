@@ -16,7 +16,19 @@
     <script>
         $('#sketch_submission').submit(function(e){
             e.preventDefault();
-            console.log('sent');
+
+            $.ajax({
+              type: "POST",
+              url: "./compile",
+              data: {
+                  sketch: $("#sketch").val()
+              }
+            })
+            .done(function(msg) {
+                console.log(msg);
+            });
+
+
         })
     </script>
 </body>
