@@ -29,7 +29,13 @@ function Controller($scope) {
 			$compiled.val(hex);
 			$compileTime.html('Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms');
 
-			$scope.status = "waiting";
+			$scope.status = "success";
+			$scope.submitButton = submitButtonDefault;
+			$scope.$apply();
+		})
+		.error(function(msg) {
+			$compiled.val("error");
+			$scope.status = "error";
 			$scope.submitButton = submitButtonDefault;
 			$scope.$apply();
 		});
