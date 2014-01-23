@@ -16,7 +16,7 @@ input {
 
 textarea {
   width: 100%;
-  height: 600px;
+  height: 480px;
   font-family: Monaco, monospace; }
 
 .container {
@@ -48,7 +48,10 @@ textarea {
   border-radius: 4px;
   background: #57AD68;
   margin: 1em 0;
-  border: none; }
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
 
 .button:focus {
   outline: none; }
