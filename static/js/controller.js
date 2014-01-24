@@ -36,5 +36,4 @@ function Controller($scope) {
 			$scope.$apply();
 		});
 	};
-
 }
