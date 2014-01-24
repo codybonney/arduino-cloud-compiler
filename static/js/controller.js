@@ -3,14 +3,11 @@ function Controller($scope) {
 
 	$scope.compiling = false;
 	$scope.compileTime = "";
-	$scope.status = "waiting";
 	$scope.sketch = defaultSketch;
 	$scope.compiled = "";
 
 	$scope.compile = function() {
 		$scope.compiling = true;
-		$scope.status = "compiling";
-		$scope.compiled = "Compiling...";
 		var compileTimeStart = new Date().getTime();
 
 		$.ajax({
@@ -25,22 +22,22 @@ function Controller($scope) {
 			var compileTimeEnd = new Date().getTime();
 			$scope.compiled = hex;
 			$scope.compileTime = 'Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms';
-			$scope.status = "success";
 			$scope.$apply();
 		})
 		.error(function(msg) {
 			$scope.compiling = false;
 			$scope.compiled = "error";
-			$scope.status = "error";
 			$scope.$apply();
 		});
 	};
 
 	$scope.$watch('compiling', function() {
 		if($scope.compiling) {
-			$scope.submitButton = "Compiling...";
+			$scope.submitButton = $scope.compiled = "Compiling...";
+			$scope.status = "compiling";
 		} else {
 			$scope.submitButton = "Compile Sketch";
+			$scope.status = "ready"
 		}
 	});
 }
