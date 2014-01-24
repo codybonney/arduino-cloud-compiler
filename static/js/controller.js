@@ -2,7 +2,6 @@ function Controller($scope) {
 	var submitButtonDefault = "Compile Sketch";
 	var defaultSketch = "#define LED_PIN 13\n\nvoid setup()\n{\n    pinMode(LED_PIN, OUTPUT);\n}\n\nvoid loop()\n{\n    digitalWrite(LED_PIN, HIGH);\n    delay(100);\n    digitalWrite(LED_PIN, HIGH);\n    delay(900);\n}";
 
-
 	$scope.compileTime = "";
 	$scope.status = "waiting";
 	$scope.sketch = defaultSketch;
@@ -13,7 +12,6 @@ function Controller($scope) {
 		$scope.status = "compiling";
 		$scope.submitButton = "Compiling...";
 		$scope.compiled = "Compiling...";
-
 		var compileTimeStart = new Date().getTime();
 
 		$.ajax({
@@ -27,7 +25,6 @@ function Controller($scope) {
 			var compileTimeEnd = new Date().getTime();
 			$scope.compiled = hex;
 			$scope.compileTime = 'Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms';
-
 			$scope.status = "success";
 			$scope.submitButton = submitButtonDefault;
 			$scope.$apply();
