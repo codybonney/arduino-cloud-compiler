@@ -1,10 +1,7 @@
 function Controller($scope) {
-	var defaultSketch = "#define LED_PIN 13\n\nvoid setup()\n{\n    pinMode(LED_PIN, OUTPUT);\n}\n\nvoid loop()\n{\n    digitalWrite(LED_PIN, HIGH);\n    delay(100);\n    digitalWrite(LED_PIN, HIGH);\n    delay(900);\n}";
-
+	$scope.sketch = "#define LED_PIN 13\n\nvoid setup()\n{\n    pinMode(LED_PIN, OUTPUT);\n}\n\nvoid loop()\n{\n    digitalWrite(LED_PIN, HIGH);\n    delay(100);\n    digitalWrite(LED_PIN, HIGH);\n    delay(900);\n}";
 	$scope.compiling = false;
-	$scope.compileTime = "";
-	$scope.sketch = defaultSketch;
-	$scope.compiled = "";
+	$scope.compileTime = $scope.compiled = "";
 
 	$scope.compile = function() {
 		$scope.compiling = true;
