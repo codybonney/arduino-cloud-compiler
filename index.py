@@ -1,5 +1,4 @@
-from flask import Flask, request, render_template, url_for, jsonify
-import json
+from flask import Flask, request, jsonify
 import string
 import random
 import os.path
