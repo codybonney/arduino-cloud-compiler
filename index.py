@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, jsonify
+import json
 import string
 import random
 import os.path
@@ -13,13 +14,7 @@ def random_string(size=8, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
 
 
-@app.route('/')
-def submission():
-    return app.send_static_file('landing.html')
-
-
-@app.route('/compile', methods=['POST'])
-def compile_sketch():
+def compile_arduino_sketch(sketch):
     sketch_id = random_string()
     compiled_dir = compiled_path + sketch_id + "/"
 
@@ -32,7 +27,7 @@ def compile_sketch():
 
     # write the sketch.ino file
     sketch_file = open("src/sketch.ino", "w+")
-    sketch_file.write(request.form["sketch"])
+    sketch_file.write(sketch)
     sketch_file.close()
 
     # build the project
@@ -44,6 +39,22 @@ def compile_sketch():
     compiled_hex_file.close()
 
     return hex_data
+
+
+@app.route('/')
+def submission():
+    return app.send_static_file('landing.html')
+
+
+@app.route('/compile', methods=['POST'])
+def compile_sketch():
+    return compile_arduino_sketch(request.form["sketch"])
+
+
+@app.route('/compile/json', methods=['POST'])
+def compile_sketch_json():
+    return jsonify(hex=compile_arduino_sketch(request.form["sketch"]))
+
 
 if __name__ == '__main__':
     app.run(debug=True, host=host)
