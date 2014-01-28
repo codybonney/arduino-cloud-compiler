@@ -6,7 +6,6 @@ function Controller($scope) {
 
 	$scope.compile = function() {
 		$scope.compiling = true;
-		var compileTimeStart = new Date().getTime();
 
 		$.ajax({
 			type: "POST",
@@ -15,16 +14,19 @@ function Controller($scope) {
 				sketch: $scope.sketch
 			}
 		})
-		.success(function(hex) {
+		.success(function(res) {
 			$scope.compiling = false;
-			var compileTimeEnd = new Date().getTime();
-			$scope.compileTime = 'Processed sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms';
+			console.log(res);
 
-			if(hex.error) {
-				$scope.compiled = hex.error;
+			if(res.processing_time_ms) {
+				$scope.compileTime = 'Processed sketch in ' + res.processing_time_ms + 'ms';
+			}
+
+			if(res.error) {
+				$scope.compiled = res.error;
 				$scope.status = "error";
 			} else {
-				$scope.compiled = hex.data;
+				$scope.compiled = res.data;
 				$scope.status = "success"
 			}
 
