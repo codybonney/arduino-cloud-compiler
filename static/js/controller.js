@@ -18,7 +18,7 @@ function Controller($scope) {
 		.success(function(hex) {
 			$scope.compiling = false;
 			var compileTimeEnd = new Date().getTime();
-			$scope.compileTime = 'Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms';
+			$scope.compileTime = 'Processed sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms';
 
 			if(hex.error) {
 				$scope.compiled = hex.error;
@@ -31,9 +31,9 @@ function Controller($scope) {
 			$scope.$apply();
 		})
 
-		.error(function(msg) {
+		.error(function(res) {
 			$scope.compiling = false;
-			$scope.compiled = "error";
+			$scope.compiled = "Error communicating with server\n response: " + res;
 			$scope.$apply();
 		});
 	};

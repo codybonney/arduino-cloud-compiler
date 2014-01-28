@@ -22,19 +22,19 @@ def compile_arduino_sketch(sketch):
     try:
         os.mkdir(compiled_dir)
     except OSError:
-        return "error: could not create directory"
+        return jsonify(error="could not create directory")
 
     # change into created directory
     try:
         os.chdir(compiled_dir)
     except OSError:
-        return "error: could not change to created directory"
+        return jsonify(error="could not change to created directory")
 
     # initialize build
     try:
         ino.runner.main(['ino', 'init'], compiled_dir)
     except:
-        return "error: unable to initialize build"
+        return jsonify(error="unable to initialize build")
 
     # write the sketch.ino file
     try:
@@ -42,7 +42,7 @@ def compile_arduino_sketch(sketch):
         sketch_file.write(sketch)
         sketch_file.close()
     except:
-        return "error: unable to write sketch file"
+        return jsonify(error="unable to write sketch file")
 
     # build the project
     try:
@@ -56,7 +56,7 @@ def compile_arduino_sketch(sketch):
         hex_data = compiled_hex_file.read()
         compiled_hex_file.close()
     except:
-        return "error: unable to read compiled file"
+        return jsonify(error="unable to read compiled file")
 
     return jsonify(data=hex_data)
 
