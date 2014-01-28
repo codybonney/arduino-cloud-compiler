@@ -21,12 +21,21 @@ def send_response(firmware=None, error=None, start_time=0, sketch_id=None):
     processing_time_seconds = round((end_time - start_time), 2)
     processing_time_ms = int(processing_time_seconds * 1000)
 
+    firmware_size_bytes = None
+    firmware_size_kilobytes = None
+
+    if firmware is not None:
+        firmware_size_bytes = len(firmware)
+        firmware_size_kilobytes = round((float(firmware_size_bytes)/1024), 2)
+
     return jsonify(
         firmware=firmware,
         error=error,
         processing_time_seconds=processing_time_seconds,
         processing_time_ms=processing_time_ms,
-        sketch_id=sketch_id
+        sketch_id=sketch_id,
+        firmware_size_bytes=firmware_size_bytes,
+        firmware_size_kilobytes=firmware_size_kilobytes
     )
 
 
