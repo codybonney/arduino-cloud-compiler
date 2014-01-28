@@ -11,6 +11,12 @@ body {
 label {
 	padding: .5em 0;
 	color: #AEAEAE;
+
+	.firmware_size {
+		font-size: 0.75em;
+		color: #8F8F8F;
+		font-style: italic;
+	}
 }
 
 label,

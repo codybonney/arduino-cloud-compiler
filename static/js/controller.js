@@ -22,6 +22,10 @@ function Controller($scope) {
 				$scope.compileTime = 'Processed sketch in ' + res.processing_time_ms + 'ms';
 			}
 
+			if(res.firmware_size_bytes) {
+				$scope.firmware_size = '(' + res.firmware_size_bytes + ' bytes)';
+			}
+
 			if(res.error) {
 				$scope.compiled = res.error;
 				$scope.status = "error";
@@ -45,6 +49,7 @@ function Controller($scope) {
 		if($scope.compiling) {
 			$scope.submitButton = $scope.compiled = "Compiling...";
 			$scope.status = "compiling";
+			$scope.firmware_size = '';
 		} else {
 			$scope.submitButton = "Compile Sketch";
 		}
