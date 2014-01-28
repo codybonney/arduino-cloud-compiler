@@ -35,7 +35,7 @@ def send_success(hex="Missing HEX data", start_time=0):
     processing_time_ms = int(processing_time_seconds * 1000)
 
     return jsonify(
-        data=hex,
+        firmware_hex=hex,
         processing_time_seconds=processing_time_seconds,
         processing_time_ms=processing_time_ms
     )
