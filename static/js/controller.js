@@ -26,8 +26,8 @@ function Controller($scope) {
 				$scope.compiled = res.error;
 				$scope.status = "error";
 			}
-			else if(res.firmware_hex) {
-				$scope.compiled = res.firmware_hex;
+			else if(res.firmware) {
+				$scope.compiled = res.firmware;
 				$scope.status = "success"
 			}
 
