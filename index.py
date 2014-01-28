@@ -3,6 +3,7 @@ import string
 import random
 import os.path
 import ino.runner
+from ino.exc import Abort
 
 host = '192.168.1.33'
 compiled_path = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/"
@@ -18,24 +19,44 @@ def compile_arduino_sketch(sketch):
     compiled_dir = compiled_path + sketch_id + "/"
 
     # create a directory for the compiled sketch
-    os.mkdir(compiled_dir)
-    os.chdir(compiled_dir)
+    try:
+        os.mkdir(compiled_dir)
+    except OSError:
+        return "error: could not create directory"
 
-    # initialize
-    ino.runner.main(['ino', 'init'], compiled_dir)
+    # change into created directory
+    try:
+        os.chdir(compiled_dir)
+    except OSError:
+        return "error: could not change to created directory"
+
+    # initialize build
+    try:
+        ino.runner.main(['ino', 'init'], compiled_dir)
+    except:
+        return "error: unable to initialize build"
 
     # write the sketch.ino file
-    sketch_file = open("src/sketch.ino", "w+")
-    sketch_file.write(sketch)
-    sketch_file.close()
+    try:
+        sketch_file = open("src/sketch.ino", "w+")
+        sketch_file.write(sketch)
+        sketch_file.close()
+    except:
+        return "error: unable to write sketch file"
 
     # build the project
-    ino.runner.main(['ino', 'build'], compiled_dir)
+    try:
+        ino.runner.main(['ino', 'build'], compiled_dir)
+    except Abort as e:
+        return str(e)
 
     # fetch compiled data
-    compiled_hex_file = open(".build/uno/firmware.hex", "r")
-    hex_data = compiled_hex_file.read()
-    compiled_hex_file.close()
+    try:
+        compiled_hex_file = open(".build/uno/firmware.hex", "r")
+        hex_data = compiled_hex_file.read()
+        compiled_hex_file.close()
+    except:
+        return "error: unable to read compiled file"
 
     return hex_data
 
