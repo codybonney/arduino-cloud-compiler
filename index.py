@@ -98,11 +98,5 @@ def submission():
 def compile_sketch():
     return compile_arduino_sketch(request.form["sketch"])
 
-
-@app.route('/compile/json', methods=['POST'])
-def compile_sketch_json():
-    return jsonify(hex=compile_arduino_sketch(request.form["sketch"]))
-
-
 if __name__ == '__main__':
     app.run(debug=True, host=host)
