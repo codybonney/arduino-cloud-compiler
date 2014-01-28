@@ -15,7 +15,7 @@ def random_string(size=8, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
 
 
-def send_response(firmware=None, error=None, start_time=0):
+def send_response(firmware=None, error=None, start_time=0, sketch_id=None):
     end_time = time.time()
 
     processing_time_seconds = round((end_time - start_time), 2)
@@ -25,7 +25,8 @@ def send_response(firmware=None, error=None, start_time=0):
         firmware=firmware,
         error=error,
         processing_time_seconds=processing_time_seconds,
-        processing_time_ms=processing_time_ms
+        processing_time_ms=processing_time_ms,
+        sketch_id=sketch_id
     )
 
 
@@ -94,7 +95,8 @@ def compile_arduino_sketch(sketch):
 
     return send_response(
         firmware=hex_data,
-        start_time=start_time
+        start_time=start_time,
+        sketch_id=sketch_id
     )
 
 
