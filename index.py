@@ -48,7 +48,7 @@ def compile_arduino_sketch(sketch):
     try:
         ino.runner.main(['ino', 'build'], compiled_dir)
     except Abort as e:
-        return str(e)
+        return jsonify(error=str(e))
 
     # fetch compiled data
     try:
@@ -58,7 +58,7 @@ def compile_arduino_sketch(sketch):
     except:
         return "error: unable to read compiled file"
 
-    return hex_data
+    return jsonify(data=hex_data)
 
 
 @app.route('/')

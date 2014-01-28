@@ -24,6 +24,17 @@ textarea {
 	font-family: Monaco, monospace;
 }
 
+.firmware {
+
+	&.error textarea {
+		background: rgba(249, 0, 0, 0.30);
+	}
+
+	&.success textarea {
+		background: rgba(0, 224, 13, 0.19);
+	}
+}
+
 .container {
 	min-width: 550px;
 	width: 58%;

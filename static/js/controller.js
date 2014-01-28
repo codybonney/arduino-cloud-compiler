@@ -1,4 +1,5 @@
 function Controller($scope) {
+	$scope.status = "ready";
 	$scope.sketch = "#define LED_PIN 13\n\nvoid setup()\n{\n    pinMode(LED_PIN, OUTPUT);\n}\n\nvoid loop()\n{\n    digitalWrite(LED_PIN, HIGH);\n    delay(100);\n    digitalWrite(LED_PIN, HIGH);\n    delay(900);\n}";
 	$scope.compiling = false;
 	$scope.compileTime = $scope.compiled = "";
@@ -17,10 +18,19 @@ function Controller($scope) {
 		.success(function(hex) {
 			$scope.compiling = false;
 			var compileTimeEnd = new Date().getTime();
-			$scope.compiled = hex;
 			$scope.compileTime = 'Compiled sketch in ' + (compileTimeEnd - compileTimeStart) + 'ms';
+
+			if(hex.error) {
+				$scope.compiled = hex.error;
+				$scope.status = "error";
+			} else {
+				$scope.compiled = hex.data;
+				$scope.status = "success"
+			}
+
 			$scope.$apply();
 		})
+
 		.error(function(msg) {
 			$scope.compiling = false;
 			$scope.compiled = "error";
@@ -34,7 +44,6 @@ function Controller($scope) {
 			$scope.status = "compiling";
 		} else {
 			$scope.submitButton = "Compile Sketch";
-			$scope.status = "ready"
 		}
 	});
 }
