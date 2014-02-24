@@ -13,5 +13,5 @@ Usage
 
 ### Using cURL
 ```
-curl --data-binary "@examples/cURL/example.ino" http://192.168.1.33:5000/compile
+curl --data-binary "@./examples/cURL/example.ino" http://192.168.1.33:5000/compile
 ```
