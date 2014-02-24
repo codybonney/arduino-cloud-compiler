@@ -8,9 +8,9 @@ Currently working on OS X
 
 Dependencies
 ======================
-Python 2.7
-Pip
-Ino
+* Python 2.7
+* Pip
+* Ino
 
 Installation
 ======================
