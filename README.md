@@ -2,14 +2,14 @@ Arduino Cloud Compiler
 ======================
 
 A web service for compiling Arduino sketches.
+##### NOTE: This is a work in progress. It should not be used in production!
 
 ![](http://codybonney.com/content/images/2014/Feb/arduino_cloud_compiler.png)
 
-Currently working on:
+Currently "working" on
+======================
 * OS X 10.9
 * Ubuntu 12
-
-##### NOTE: This is a work in progress. It should not be used in production!
 
 Dependencies
 ======================
