@@ -94,9 +94,9 @@ pip install flask
 
 Install Ino
 
-'''
+```
 pip install ino
-'''
+```
 
 Update the `host` and `compiled_path` variables in `index.py`
 
