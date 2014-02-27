@@ -2,7 +2,10 @@ Arduino Cloud Compiler
 ======================
 
 A web service for compiling Arduino sketches.
-Currently working on OS X
+
+Currently working on:
+* OS X 10.9
+* Ubuntu 12
 
 ##### NOTE: This is a work in progress. It should not be used in production!
 
