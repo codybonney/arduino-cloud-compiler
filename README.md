@@ -31,7 +31,7 @@ Install Pip
 sudo apt-get install python-pip
 ```
 
-Install virtualenvwrapper
+Install virtualenv
 
 ```
 sudo pip install virtualenv
@@ -73,7 +73,14 @@ Reload `~/.bashrc`
 . ~/.bashrc
 ```
 
-Navigate to the projects directory
+Create a new directory for the project
+
+```
+mkdir ~/Projects
+mkdir ~/Projects/arduino-cloud-compiler
+```
+
+Navigate to the new directory
 
 ```
 cd ~/Projects/arduino-cloud-compiler
