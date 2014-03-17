@@ -1,13 +1,18 @@
 from flask import Flask, request, jsonify
 import string
 import random
+import os
 import os.path
 import ino.runner
 import time
+import shutil
 from ino.exc import Abort
 
+# local machine
 host = '192.168.1.33'
 compiled_path = "/Users/cody/Projects/github/arduino-cloud-compiler/compiled/"
+
+
 app = Flask(__name__)
 
 
@@ -65,9 +70,9 @@ def compile_arduino_sketch(sketch):
     # initialize build
     try:
         ino.runner.main(['ino', 'init'], compiled_dir)
-    except:
+    except Abort as e:
         return send_response(
-            error="unable to initialize build",
+            error=str(e),
             start_time=start_time
         )
 
@@ -112,6 +117,19 @@ def compile_arduino_sketch(sketch):
 @app.route('/')
 def submission():
     return app.send_static_file('landing.html')
+
+
+@app.route('/clear')
+def clear():
+    try:
+        projects = len([name for name in os.listdir(compiled_path)])
+    except:
+        projects = 0
+
+    shutil.rmtree(compiled_path)
+    os.mkdir(compiled_path)
+
+    return 'Removed ' + str(projects) + ' compiled projects from the server.'
 
 
 @app.route('/compile', methods=['POST'])
