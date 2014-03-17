@@ -116,16 +116,23 @@ Copy
 to
 `/root/.virtualenvs/arduino-cloud-compiler/lib/python2.7/site-packages/ino`
 
-
 Update the `host` and `compiled_path` variables in `index.py`
-
-Update the target path in `arduino-cloud-compiler/lib/python2.7/site-packages/ino/make/Makefile.sketch.jinja`
 
 Start the server
 
 ```
 python index.py
 ```
+
+Installation on OS X
+======================
+
+#####Note: this is incomplete
+
+Replace
+`~/Projects/github/arduino-cloud-compiler/lib/python2.7/site-packages/ino/make/Makefile.sketch.jinja`
+with
+`~/Projects/github/arduino-cloud-compiler/lib/python2.7/site-packages/ino/make/OSX_Makefile.sketch.jinja`
 
 Usage
 ======================
