@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 import string
 import random
 import os
@@ -20,7 +20,7 @@ def random_string(size=8, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
 
 
-def send_response(firmware=None, error=None, start_time=0, sketch_id=None):
+def send_response(sketch=None, firmware=None, error=None, start_time=0, sketch_id=None):
     end_time = time.time()
 
     processing_time_seconds = round((end_time - start_time), 2)
@@ -34,6 +34,7 @@ def send_response(firmware=None, error=None, start_time=0, sketch_id=None):
         firmware_size_kilobytes = round((float(firmware_size_bytes)/1024), 2)
 
     return jsonify(
+        sketch=sketch,
         firmware=firmware,
         error=error,
         processing_time_seconds=processing_time_seconds,
@@ -108,6 +109,7 @@ def compile_arduino_sketch(sketch):
         )
 
     return send_response(
+        sketch=sketch,
         firmware=hex_data,
         start_time=start_time,
         sketch_id=sketch_id
@@ -130,6 +132,76 @@ def clear():
     os.mkdir(compiled_path)
 
     return 'Removed ' + str(projects) + ' compiled projects from the server.'
+
+
+@app.route('/<sketch>.json')
+def project(sketch):
+    start_time = time.time()
+
+    # fetch sketch data
+    try:
+        sketch_file = open(compiled_path + sketch + '/src/sketch.ino', "r")
+        sketch_data = sketch_file.read()
+        sketch_file.close()
+    except:
+        return send_response(
+            error="unable to read sketch file"
+        )
+
+    # fetch compiled data
+    try:
+        compiled_hex_file = open(compiled_path + sketch + '/.build/uno/firmware.hex', "r")
+        hex_data = compiled_hex_file.read()
+        compiled_hex_file.close()
+    except:
+        return send_response(
+            error="unable to read compiled file"
+        )
+
+    return send_response(
+        sketch=sketch_data,
+        firmware=hex_data,
+        start_time=start_time,
+        sketch_id=sketch
+    )
+
+
+@app.route('/<sketch>/firmware.hex')
+def project_firmware(sketch):
+
+    # fetch compiled data
+    try:
+        compiled_hex_file = open(compiled_path + sketch + '/.build/uno/firmware.hex', "r")
+        hex_data = compiled_hex_file.read()
+        compiled_hex_file.close()
+    except:
+        return send_response(
+            error="unable to read compiled file"
+        )
+
+    response = make_response(hex_data)
+    response.headers["Content-Disposition"] = "attachment; filename=firmware.hex"
+
+    return response
+
+
+@app.route('/<sketch>/sketch.ino')
+def project_sketch(sketch):
+
+    # fetch sketch data
+    try:
+        sketch_file = open(compiled_path + sketch + '/src/sketch.ino', "r")
+        sketch_data = sketch_file.read()
+        sketch_file.close()
+    except:
+        return send_response(
+            error="unable to read sketch file"
+        )
+    response = make_response(sketch_data)
+    response.headers["Content-Disposition"] = "attachment; filename=sketch.ino"
+
+    return response
+
 
 
 @app.route('/compile', methods=['POST'])
