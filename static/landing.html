@@ -25,6 +25,10 @@
         <div class="container firmware {{status}}">
             <label for="compiled">Firmware <span class="firmware_size">{{firmware_size}}</span></label>
             <textarea id="compiled" name="compiled" ng-model="compiled" readonly></textarea>
+
+            <a href="{{download_hex}}" class="button {{status}} download" target="_blank">.hex</a>
+            <a href="{{download_ino}}" class="button {{status}} download" target="_blank">.ino</a>
+            <a href="{{download_json}}" class="button {{status}} download" target="_blank">.json</a>
         </div>
     </div>
 

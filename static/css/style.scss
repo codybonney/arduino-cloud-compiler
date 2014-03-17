@@ -78,18 +78,27 @@ textarea {
 	background: #57AD68;
 	margin: 1em 0;
 	border: none;
+
+	&:focus {
+		outline: none;
+	}
+
+	&:hover {
+		cursor: pointer;
+		background: #6FB97E;
+	}
+
+	&.compiling {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+
+	&.download {
+		&.ready,
+		&.compiling,
+		&.error {
+			display : none;
+		}
+	}
 }
 
-.button:focus {
-	outline: none;
-}
-
-.button:hover {
-	cursor: pointer;
-	background: #6FB97E;
-}
-
-.button.compiling {
-	pointer-events: none;
-	opacity: 0.5;
-}

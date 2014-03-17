@@ -32,6 +32,9 @@ function Controller($scope) {
 			}
 			else if(res.firmware) {
 				$scope.compiled = res.firmware;
+				$scope.download_hex = res.sketch_id + '/firmware.hex';
+				$scope.download_ino = res.sketch_id + '/sketch.ino';
+				$scope.download_json = res.sketch_id + '.json';
 				$scope.status = "success"
 			}
 
