@@ -137,7 +137,10 @@ with
 Usage
 ======================
 
-### Using cURL
+### Remove all compiled sketches from server
+Navigate to `http://localhost:5000/clear` in your browser
+
+### Compile a sketch using cURL
 ```
-curl --data-binary "@./examples/cURL/example.ino" http://192.168.1.33:5000/compile
+curl --data-binary "@./examples/cURL/example.ino" http://localhost:5000/compile
 ```
